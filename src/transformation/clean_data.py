@@ -24,7 +24,7 @@ def process_silver_layer():
     print(f"🔄 Processing file: {latest_file}")
 
     # 2. Load the JSON data
-    with open(latest_file, "r") as f:
+    with open(latest_file, "r", encoding="utf-8", errors="ignore") as f:
         raw_data = json.load(f)
 
     # 3. Flatten the JSON (Extract daily arrays into rows)
