@@ -28,6 +28,26 @@ services:
       - postgres
     restart: unless-stopped
 
+  airflow:
+    image: apache/airflow:2.9.3
+    container_name: weather_airflow
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - _PIP_ADDITIONAL_REQUIREMENTS=pandas psycopg2-binary sqlalchemy requests
+      - DB_HOST=postgres
+      - DB_PORT=5432
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./src:/opt/airflow/src
+      - ./data:/opt/airflow/data
+      - ./sql:/opt/airflow/sql
+    command: standalone
+    depends_on:
+      - postgres
+
 volumes:
   pgdata:
   pgadmin_data:
+
